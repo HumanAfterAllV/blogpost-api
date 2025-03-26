@@ -1,0 +1,26 @@
+# Archivos de configuración de entorno y secretos
+.env
+appsettings*.json
+appsettings.json  # Evita subir configuraciones con credenciales (sube solo appsettings.example.json si es necesario)
+appsettings.Development.json
+# Carpetas de compilación y binarios
+bin/
+obj/
+out/
+
+# Configuración del IDE y editor
+.vscode/
+*.suo
+*.user
+*.vs/
+*.vscode/
+
+# Dependencias y paquetes
+packages/
+node_modules/
+*.nupkg
+*.snupkg
+
+# Caché y logs
+*.log
+
