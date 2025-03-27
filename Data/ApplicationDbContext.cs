@@ -10,6 +10,7 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+
     }
 
     // Tabla Posts en la base de datos
@@ -23,7 +24,7 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Relación clara entre Post y Comments (Un Post tiene muchos Comments)
+        // Relación entre Post y Comments (Un Post tiene muchos Comments)
         modelBuilder.Entity<Post>()
             .HasMany(p => p.Comments)
             .WithOne(c => c.Post)

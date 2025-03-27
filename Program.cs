@@ -1,4 +1,8 @@
 using BlogPost.Api.Data;
+using BlogPost.Api.Interfaces;
+using BlogPost.Api.Data.Repositories;
+using BlogPost.Api.Services;
+using BlogPost.Api.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +18,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 // Configurar AutoMapper (lo configuramos luego)
-builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Configuración de Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
