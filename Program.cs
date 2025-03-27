@@ -10,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//Inyeccion de Dependencias
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+
 // Configurar AutoMapper (lo configuramos luego)
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
