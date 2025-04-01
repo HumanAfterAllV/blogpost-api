@@ -12,6 +12,8 @@ public class ApplicationDbContext : DbContext
     {
 
     }
+    // Tabla Users en la base de datos
+    public DbSet<User> Users { get; set; }
 
     // Tabla Posts en la base de datos
     public DbSet<Post> Posts { get; set; }
@@ -30,6 +32,17 @@ public class ApplicationDbContext : DbContext
             .WithOne(c => c.Post)
             .HasForeignKey(c => c.PostId)
             .OnDelete(DeleteBehavior.Cascade); // al borrar un post, borra sus comentarios
+
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
+        modelBuilder.Entity<Comment>()
+            .HasOne(c => c.User)
+            .WithMany(u => u.Comments)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }
 

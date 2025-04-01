@@ -30,10 +30,10 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+// Configuramos 
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("JwtSettings"));
-
-
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -54,7 +54,10 @@ builder.Services.AddAuthentication("Bearer")
 
 builder.Services.AddHttpClient();
 
+
 //Inyeccion de Dependencias
+builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 // Configurar AutoMapper (lo configuramos luego)
@@ -73,11 +76,10 @@ app.UseSwaggerUI();
 // Middleware para manejo de excepciones (personalizado más adelante)
 app.UseHttpsRedirection();
 
+app.UseCors("AllowFrontend"); 
 
+app.UseAuthentication();    
 app.UseAuthorization();
-app.UseAuthentication();
-
-app.UseCors("AllowedFrontend");
 
 app.MapControllers();
 

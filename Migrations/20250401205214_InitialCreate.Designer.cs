@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BlogPost.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250328012312_InitialCreate")]
+    [Migration("20250401205214_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,9 +48,8 @@ namespace BlogPost.Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -59,6 +58,8 @@ namespace BlogPost.Api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -96,6 +97,35 @@ namespace BlogPost.Api.Migrations
                     b.ToTable("Posts");
                 });
 
+            modelBuilder.Entity("BlogPost.Api.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("BlogPost.Api.Models.Comment", b =>
                 {
                     b.HasOne("BlogPost.Api.Models.Post", "Post")
@@ -104,10 +134,23 @@ namespace BlogPost.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("BlogPost.Api.Models.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BlogPost.Api.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("BlogPost.Api.Models.User", b =>
                 {
                     b.Navigation("Comments");
                 });
