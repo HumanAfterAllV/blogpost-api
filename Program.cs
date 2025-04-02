@@ -60,6 +60,7 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 
+
 // Configurar AutoMapper (lo configuramos luego)
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

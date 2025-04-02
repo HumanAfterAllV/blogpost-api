@@ -7,7 +7,7 @@ public class Post
     public string Description { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty ;
     public string Author { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdateAt { get; set; } = DateTime.UtcNow;
 
     //Forengkey con el modelo Comment

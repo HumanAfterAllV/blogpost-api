@@ -3,6 +3,7 @@ using BlogPost.Api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using BlogPost.Api.Services;
 
 namespace BlogPost.Api.Controllers;
 
@@ -44,10 +45,9 @@ public class PostController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreatePost([FromBody] CreatePostDto dto)
     {
-        var email = User.FindFirst(ClaimTypes.Email)?.Value;
-        var role = User.FindFirst(ClaimTypes.Role)?.Value;
+        var createdPost = await _postservice.CreatePostAsync(dto);
+        return CreatedAtAction(nameof(GetPost), new { id = createdPost.Id }, createdPost);
 
-        return Ok($"Post creado por {email} con rol {role}");
         //HTTP 201
     }
 

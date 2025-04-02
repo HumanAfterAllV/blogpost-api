@@ -42,7 +42,6 @@ public class ApplicationDbContext : DbContext
             .WithMany(u => u.Comments)
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-
     }
 }
 
