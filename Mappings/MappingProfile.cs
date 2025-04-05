@@ -22,5 +22,12 @@ public class MappingProfile : Profile
 
         // Mapeo desde CreateCommentDto hacia Comment
         CreateMap<CreateCommentDto, Comment>();
+
+        // Mapeo para colocar Email 
+        CreateMap<Comment, CommentDto>()
+            .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.User.Email));
+
+        CreateMap<CreateCommentDto, Comment>();
+
     }
 }
